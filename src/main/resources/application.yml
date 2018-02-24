@@ -21,5 +21,5 @@ spring:
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
 mybatis:
-    typeAliasesPackage: com.springbootdemo.entity
-    mapperLocations: classpath:mapper/*.xml
+    mapperLocations: classpath*:/mapper/**Mapper.xml
+    typeAliasesPackage: com.springbootdemo.mapper
