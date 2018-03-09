@@ -2,9 +2,11 @@ package com.springbootdemo.controller;
 
 import com.springbootdemo.dao.mapper.UserMapper;
 import com.springbootdemo.domain.entity.User;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -27,8 +30,6 @@ public class TestController {
 
 	@Autowired
 	private UserMapper userMapper;
-
-	private final CountDownLatch latch = new CountDownLatch(4);
 
 	@RequestMapping("/show")
 	public String show(){
@@ -57,6 +58,15 @@ public class TestController {
 			logger.info("发送kafka成功.");
 		} catch (Exception e) {
 			logger.error("发送kafka失败", e);
+		}
+	}
+
+	@KafkaListener(topics = {"test"})
+	public void listen(ConsumerRecord<?, ?> record) {
+		Optional<?> kafkaMessage = Optional.ofNullable(record.value());
+		if (kafkaMessage.isPresent()) {
+			Object message = kafkaMessage.get();
+			System.out.println("listen1 " + message);
 		}
 	}
 }

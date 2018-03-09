@@ -23,21 +23,29 @@ spring:
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
     kafka:
-      producer:
-        retries: 0
-        batch-size: 16384
-        buffer-memory: 33554432
-        key-serializer: org.apache.kafka.common.serialization.StringSerializer
-        value-serializer: org.apache.kafka.common.serialization.StringSerializer
-        broker-list: 118.24.19.64:9092
-      consumer:
-        zookeeper: 118.24.19.64:2181
-        group-id: hanzhipan
-        auto-offset-reset: earliest
-        enable-auto-commit: true
-        auto-commit-interval: 100
-        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        producer:
+            retries: 0
+            batch-size: 16384
+            buffer-memory: 33554432
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+            bootstrap-servers: 118.24.19.64:9092
+        consumer:
+            group-id: hanzhipan
+            auto-offset-reset: earliest
+            enable-auto-commit: true
+            auto-commit-interval: 100
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            bootstrap-servers: 118.24.19.64:9092
+eureka:
+    instance:
+        hostname: localhost
+    client:
+        registerWithEureka: false
+        fetchRegistry: false
+        serviceUrl:
+            defalstZone: http://${eureka.instance.hostname}:${server.port}/eureka
 
 mybatis:
     mapperLocations: classpath*:/mapper/**Mapper.xml
