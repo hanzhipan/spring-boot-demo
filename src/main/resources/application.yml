@@ -1,6 +1,8 @@
 server:
     port: 8000
 spring:
+    # security 使能
+    security.basic.enabled: false
     datasource:
         url: jdbc:mysql://118.24.19.64:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
@@ -44,7 +46,9 @@ eureka:
         registerWithEureka: false
         fetchRegistry: false
         serviceUrl:
-            defalstZone: http://${eureka.instance.hostname}:${server.port}/eureka
+            defalstZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    server:
+        evictionIntervalTimerInMs: 5000
 
 mybatis:
     mapperLocations: classpath*:/mapper/**Mapper.xml
