@@ -40,13 +40,13 @@ public class TestController {
 
 	@RequestMapping("/getuser")
 	public User getUser(@RequestParam String phone) {
-		User user = userMapper.findUserByPhone(phone);
+		User user = userMapper.findByUserName(phone);
 		return user;
 	}
 
 	@RequestMapping("/insertuser")
 	public int insertUser(@RequestParam String name, @RequestParam String phone) {
-		int cnt = userMapper.insert(name, phone);
+		int cnt = userMapper.insert(name);
 		return cnt;
 	}
 
