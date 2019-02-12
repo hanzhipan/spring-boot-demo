@@ -59,3 +59,6 @@ feign:
 mybatis:
     mapperLocations: classpath*:/mapper/**Mapper.xml
     typeAliasesPackage: com.springbootdemo.mapper
+turbine:
+    app-config: EUREKA-DEMO # 定义所有要监控的微服务信息
+    cluster-name-expression: new String("default")  # 设置监控的表达式，通过此表达式表示要获取监控信息名称
