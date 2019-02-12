@@ -2,6 +2,9 @@ server:
     port: 8000
 spring:
     # security 使能
+    output.ansi.enabled: ALWAYS
+    application:
+        name: eureka-demo
     security.basic.enabled: false
     datasource:
         url: jdbc:mysql://118.24.19.64:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false
@@ -41,15 +44,18 @@ spring:
             bootstrap-servers: 118.24.19.64:9092
 eureka:
     instance:
-        hostname: localhost
+        hostname: 118.24.19.64
+        port: 8761
+        prefer-ip-address: true
+        instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
     client:
-        registerWithEureka: false
-        fetchRegistry: false
         serviceUrl:
-            defalstZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+            defaultZone: http://user:123456@${eureka.instance.hostname}:${eureka.instance.port}/eureka/
     server:
         evictionIntervalTimerInMs: 5000
-
+feign:
+    hystrix:
+        enabled: true
 mybatis:
     mapperLocations: classpath*:/mapper/**Mapper.xml
     typeAliasesPackage: com.springbootdemo.mapper
