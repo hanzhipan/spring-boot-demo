@@ -1,5 +1,6 @@
 package com.springbootdemo.controller;
 
+import com.springbootdemo.Constants;
 import com.springbootdemo.dao.mapper.UserMapper;
 import com.springbootdemo.domain.entity.User;
 import com.springbootdemo.service.ShowRemote;
@@ -39,6 +40,7 @@ public class TestController {
 	public String show(@RequestParam(value = "name") String name) throws Exception {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
 		list.forEach(n -> System.out.print(n));
+        Constants.innNum.incrementAndGet();
 		if ("neo".equals(name)) {
 			logger.error("neo cannot access");
 		    throw new Exception("neo cannot access");
@@ -61,7 +63,11 @@ public class TestController {
 
 	@RequestMapping("/hello/{name}")
 	public String index(@PathVariable("name") String name) {
-		return showRemote.show(name);
+        int accnum = Constants.accNum.incrementAndGet();
+		String result = showRemote.show(name);
+		int innnum = Constants.innNum.get();
+		logger.info("accnum:{}, innnum:{}", accnum, innnum);
+		return result;
 	}
 
 	@RequestMapping(value = "/send")

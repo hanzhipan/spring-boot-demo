@@ -42,6 +42,10 @@ spring:
             key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
             value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
             bootstrap-servers: 118.24.19.64:9092
+security:
+    user:
+        name: user
+        password: 123456
 eureka:
     instance:
         hostname: 118.24.19.64
@@ -50,7 +54,7 @@ eureka:
         instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
     client:
         serviceUrl:
-            defaultZone: http://user:123456@${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+            defaultZone: http://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:${eureka.instance.port}/eureka/
     server:
         evictionIntervalTimerInMs: 5000
 feign:
